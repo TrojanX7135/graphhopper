@@ -27,6 +27,7 @@ import com.graphhopper.util.shapes.GHPoint;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.time.LocalDateTime;
 
 /**
  * Request object to perform routing with GraphHopper.
@@ -46,6 +47,8 @@ public class GHRequest {
     private String algo = "";
     private Locale locale = Locale.US;
     private CustomModel customModel;
+    @JsonProperty("time_request")
+    private LocalDateTime time_request; // new
 
     public GHRequest() {
         this(5);
@@ -222,10 +225,21 @@ public class GHRequest {
     public List<String> getPathDetails() {
         return this.pathDetails;
     }
+    
+    //------------------------------------------------
+    public GHRequest setTimeRequest(LocalDateTime time_request) {
+        this.time_request = time_request;
+        return this;
+    }
+
+    public LocalDateTime getTimeRequest() {
+        return time_request;
+    }
+    //------------------------------------------------
 
     @Override
     public String toString() {
-        String res = "";
+        String res = "Time_request: " + time_request + "\n"; // Thêm dòng này
         for (GHPoint point : points) {
             if (res.isEmpty()) {
                 res = point.toString();
